@@ -65,21 +65,15 @@ repositories {
     maven {
         url "https://cursemaven.com"
     }
-    mavenCentral()
 }
-
-jarJar.enable()
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    // JNA: user32.dll バインディング用 (jarJarでバンドル)
-    jarJar(implementation('net.java.dev.jna:jna:[5.14.0,6.0)')) {
-        jarJar.ranged(it, '[5.14.0,6.0)')
-    }
-    jarJar(implementation('net.java.dev.jna:jna-platform:[5.14.0,6.0)')) {
-        jarJar.ranged(it, '[5.14.0,6.0)')
-    }
+    // JNA is already bundled by Forge/Minecraft (jna-5.12.1 via oshi-core).
+    // Use compileOnly to avoid duplicate module errors at runtime.
+    compileOnly 'net.java.dev.jna:jna:5.12.1'
+    compileOnly 'net.java.dev.jna:jna-platform:5.12.1'
 }
 
 tasks.named('processResources', ProcessResources).configure {
@@ -113,20 +107,6 @@ tasks.named('jar', Jar).configure {
     finalizedBy 'reobfJar'
 }
 
-tasks.named('jarJar').configure {
-    manifest {
-        attributes([
-                'Specification-Title'     : mod_id,
-                'Specification-Vendor'    : mod_authors,
-                'Specification-Version'   : '1',
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
-        ])
-    }
-    finalizedBy 'reobfJarJar'
-}
 
 publishing {
     publications {
