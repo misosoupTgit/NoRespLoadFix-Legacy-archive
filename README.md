@@ -20,7 +20,7 @@ A secondary heartbeat thread (`PostMessage(WM_NULL)`) runs as a lightweight fall
 - Does not call any GLFW functions from background threads
 - Does not hook `WindowProc` or intercept messages
 - Compatible with Embeddium(Rubidium), ModernFix
-optimization mods
+...etc optimization mods
 
 ## Requirements
 
