@@ -28,3 +28,21 @@ A secondary heartbeat thread (`PostMessage(WM_NULL)`) runs as a lightweight fall
 - Forge 47.x
 - Windows (no-op on Linux/macOS)
 - Client-side only
+
+## ⚠️ Important Considerations
+
+### Masking Real Issues
+
+This mod works by **deceiving the Windows OS** about the process responsiveness using heartbeat signals (`PostMessage(WM_NULL)`). While this prevents false "Not Responding" dialogs during legitimate high-load operations, it has a critical drawback:
+
+**If a genuine crash, hang, or serious problem occurs, you may not notice it immediately.** The mod will continue to report the process as "alive" to Windows, potentially delaying your awareness of actual issues.
+
+### Recommendation
+
+- **Stable Modpacks**: Safe to use. If your modpack is already well-optimized and stable, this mod prevents frustrating false-positive notifications.
+- **Unstable/Experimental Configurations**: Use with caution. You risk missing early warning signs of real problems. Consider monitoring logs actively and watching for actual freezes or performance degradation rather than relying on the OS dialog to alert you.
+- **Development/Testing**: Not recommended. You want immediate feedback when something breaks.
+
+### Best Practice
+
+Use this mod only in **well-tested, stable configurations** where you're confident the underlying modpack is functioning correctly. Do not rely on it as a substitute for proper troubleshooting in problematic setups.
